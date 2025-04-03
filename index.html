@@ -10,19 +10,51 @@
             padding: 0;
             height: 100%;
             overflow: hidden;
+            font-family: Arial, sans-serif;
         }
         .dashboard-container {
             width: 100%;
             height: 100vh;
             border: none;
+            display: block;
+        }
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-out;
+        }
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
+    <div class="loading" id="loading">
+        <h2>Loading RTL Performance Dashboard...</h2>
+    </div>
+    
     <iframe 
         src="https://app.madgicx.com/one-click-report/shared-link/068490dc-d001-484a-90a4-82c373014384" 
         class="dashboard-container" 
-        allowfullscreen>
+        id="dashboard"
+        allowfullscreen
+        onload="document.getElementById('loading').classList.add('hidden');">
     </iframe>
+
+    <script>
+        // Additional timeout to hide loading screen if iframe takes too long
+        setTimeout(function() {
+            document.getElementById('loading').classList.add('hidden');
+        }, 5000);
+    </script>
 </body>
 </html>
