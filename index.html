@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RTL Performance Last 7 Days</title>
+    <title>Read to Lead | Performance Report</title>
     <style>
         body, html {
             margin: 0;
@@ -35,11 +35,87 @@
             opacity: 0;
             pointer-events: none;
         }
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 50, 100, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .login-container h2 {
+            color: #003366;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .login-container p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .login-form input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .login-form button {
+            padding: 12px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .login-form button:hover {
+            background-color: #0055aa;
+        }
+        .error-message {
+            color: #cc0000;
+            margin-top: 10px;
+            display: none;
+        }
+        .login-logo {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
+    <div class="login-screen" id="login-screen">
+        <div class="login-container">
+            <h2>Read to Lead Dashboard</h2>
+            <p>Please enter the password to access the performance report.</p>
+            <div class="login-form">
+                <input type="password" id="password-input" placeholder="Enter password" />
+                <button id="login-button">Access Dashboard</button>
+                <div class="error-message" id="error-message">Incorrect password. Please try again.</div>
+            </div>
+        </div>
+    </div>
+
     <div class="loading" id="loading">
-        <h2>Loading RTL Performance Last 7 Days...</h2>
+        <h2>Loading Read to Lead Performance Report...</h2>
     </div>
     
     <iframe 
@@ -51,6 +127,44 @@
     </iframe>
 
     <script>
+        // Password authentication
+        const correctPassword = "readtolead";
+        const loginScreen = document.getElementById('login-screen');
+        const passwordInput = document.getElementById('password-input');
+        const loginButton = document.getElementById('login-button');
+        const errorMessage = document.getElementById('error-message');
+        
+        // Check if user is already authenticated in this session
+        if (sessionStorage.getItem('authenticated') === 'true') {
+            loginScreen.style.display = 'none';
+        }
+        
+        // Login button click handler
+        loginButton.addEventListener('click', function() {
+            validatePassword();
+        });
+        
+        // Also allow pressing Enter key to submit
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                validatePassword();
+            }
+        });
+        
+        function validatePassword() {
+            if (passwordInput.value === correctPassword) {
+                // Store authentication in session storage
+                sessionStorage.setItem('authenticated', 'true');
+                loginScreen.style.display = 'none';
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                setTimeout(function() {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
         // Additional timeout to hide loading screen if iframe takes too long
         setTimeout(function() {
             document.getElementById('loading').classList.add('hidden');
