@@ -1,6 +1,13 @@
-# RTL Performance Dashboard
+# Read to Lead | Performance Report
 
-This repository hosts an iframe-based dashboard displaying RTL performance metrics from Madgicx.
+This repository hosts a password-protected dashboard displaying Read to Lead performance metrics from Madgicx.
+
+## Features
+
+- **Password Protection**: Access to the dashboard requires the password "readtolead"
+- **Responsive Design**: Works on desktop and mobile devices
+- **Full-Screen Display**: Maximizes the viewing area for the performance report
+- **Loading Indicator**: Shows a loading message while the report is being loaded
 
 ## How to Enable GitHub Pages
 
@@ -18,7 +25,13 @@ After enabling GitHub Pages, the Actions workflow will automatically deploy the 
 
 Once deployed, the dashboard will be available at: https://growthack88.github.io/rtl-performance-dashboard/
 
-The dashboard embeds a Madgicx report in an iframe, displaying it in full-screen mode with a simple loading indicator.
+You will need to enter the password "readtolead" to access the performance report.
+
+## Password Information
+
+- Default password: `readtolead`
+- The password authentication is implemented using client-side JavaScript
+- Authentication is stored in the browser's session storage, so users will need to re-enter the password if they close the browser
 
 ## Troubleshooting
 
