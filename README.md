@@ -5,9 +5,11 @@ This repository hosts a password-protected dashboard displaying Read to Lead per
 ## Features
 
 - **Password Protection**: Access to the dashboard requires the password "rtl2025"
+- **Data Privacy**: Dashboard content is blurred and dimmed until valid password is entered
 - **Responsive Design**: Works on desktop and mobile devices
 - **Full-Screen Display**: Maximizes the viewing area for the performance report
 - **Loading Indicator**: Shows a loading message while the report is being loaded
+- **Smooth Transitions**: Elegant visual effects when loading and accessing the dashboard
 
 ## How to Enable GitHub Pages
 
@@ -25,13 +27,14 @@ After enabling GitHub Pages, the Actions workflow will automatically deploy the 
 
 Once deployed, the dashboard will be available at: https://growthack88.github.io/rtl-performance-dashboard/
 
-You will need to enter the password "rtl2025" to access the performance report.
+You will need to enter the password "rtl2025" to access the performance report. The dashboard content will be blurred and dimmed until the correct password is entered, ensuring that metrics and sensitive data are not visible to unauthorized users.
 
 ## Password Information
 
 - Default password: `rtl2025`
 - The password authentication is implemented using client-side JavaScript
 - Authentication is stored in the browser's session storage, so users will need to re-enter the password if they close the browser
+- Dashboard metrics are visually obscured until authentication is complete
 
 ## Troubleshooting
 
