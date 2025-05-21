@@ -17,6 +17,11 @@
             height: 100vh;
             border: none;
             display: block;
+            transition: filter 0.5s ease;
+        }
+        .dashboard-container.blurred {
+            filter: blur(20px) brightness(0.5);
+            pointer-events: none; /* Prevents interaction with the iframe while blurred */
         }
         .loading {
             position: fixed;
@@ -41,12 +46,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 50, 100, 0.9);
+            background-color: rgba(0, 50, 100, 0.6);
+            backdrop-filter: blur(5px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 2000;
+            transition: opacity 0.5s ease;
         }
         .login-container {
             background-color: white;
@@ -120,10 +127,10 @@
     
     <iframe 
         src="https://app.madgicx.com/one-click-report/shared-link/40dce958-0991-4857-8270-3c1b5791905c" 
-        class="dashboard-container" 
+        class="dashboard-container blurred" 
         id="dashboard"
         allowfullscreen
-        onload="document.getElementById('loading').classList.add('hidden');">
+        onload="handleIframeLoad()">
     </iframe>
 
     <script>
@@ -133,9 +140,24 @@
         const passwordInput = document.getElementById('password-input');
         const loginButton = document.getElementById('login-button');
         const errorMessage = document.getElementById('error-message');
+        const dashboard = document.getElementById('dashboard');
+        const loading = document.getElementById('loading');
+        
+        // Handler for iframe load
+        function handleIframeLoad() {
+            // Hide loading screen
+            loading.classList.add('hidden');
+            
+            // Check if user is already authenticated
+            if (sessionStorage.getItem('authenticated') === 'true') {
+                dashboard.classList.remove('blurred');
+                loginScreen.style.display = 'none';
+            }
+        }
         
         // Check if user is already authenticated in this session
         if (sessionStorage.getItem('authenticated') === 'true') {
+            dashboard.classList.remove('blurred');
             loginScreen.style.display = 'none';
         }
         
@@ -155,7 +177,16 @@
             if (passwordInput.value === correctPassword) {
                 // Store authentication in session storage
                 sessionStorage.setItem('authenticated', 'true');
-                loginScreen.style.display = 'none';
+                
+                // Smooth transition
+                dashboard.classList.remove('blurred');
+                setTimeout(function() {
+                    loginScreen.style.opacity = '0';
+                    setTimeout(function() {
+                        loginScreen.style.display = 'none';
+                        loginScreen.style.opacity = '1';
+                    }, 500);
+                }, 100);
             } else {
                 errorMessage.style.display = 'block';
                 passwordInput.value = '';
@@ -167,7 +198,7 @@
         
         // Additional timeout to hide loading screen if iframe takes too long
         setTimeout(function() {
-            document.getElementById('loading').classList.add('hidden');
+            loading.classList.add('hidden');
         }, 5000);
     </script>
 </body>
